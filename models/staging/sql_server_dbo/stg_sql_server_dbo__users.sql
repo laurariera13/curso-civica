@@ -11,7 +11,7 @@ user_id
 , address_id
 , created_at
 , updated_at
-, _fivetran_deleted
+,  coalesce(_fivetran_deleted, false) as is_deleted
 , _fivetran_synced
 , _loaded_at
 from source
