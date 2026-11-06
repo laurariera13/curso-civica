@@ -24,7 +24,7 @@ final as (
         , s.session_start_at_utc
         , s.session_end_at_utc
         , s.session_duration_seconds
-        , round(s.session_duration_seconds / 60, 2) as session_duration_minutes
+        , {{ second_to_minutes('s.session_duration_seconds') }} as session_duration_minutes  --round(s.session_duration_seconds / 60, 2)
         , s.page_view_count
         , s.add_to_cart_count
         , s.checkout_count

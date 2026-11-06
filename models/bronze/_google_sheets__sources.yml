@@ -15,6 +15,9 @@ sources:
                 arguments:
                  to: source('sql_server_dbo', 'products')
                  field: product_id
+          - name: quantity
+            tests:
+              - positive_values
 
 
 

@@ -11,6 +11,7 @@ models:
                 field: product_id
       - name: QUANTITY_BUDGETED
         tests:
+          - positive_values
           - dbt_utils.accepted_range:
               arguments:
                 min_value: 0
