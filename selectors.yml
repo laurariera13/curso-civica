@@ -28,10 +28,3 @@ selectors:
         - exclude:
             - method: resource_type
               value: snapshot
-
-  - name: gold_core
-    description: El core y todo lo que necesita para construirse.
-    definition:
-      method: fqn
-      value: "*"
-      parents: true

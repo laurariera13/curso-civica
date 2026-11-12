@@ -7,5 +7,3 @@ models:
         data_tests: [not_null]
       - name: budget_month
         description: Mes del presupuesto, casteado a date.
-
-
