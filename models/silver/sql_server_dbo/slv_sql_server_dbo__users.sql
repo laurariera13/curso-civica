@@ -1,33 +1,30 @@
 -- =============================================================================
--- slv_sql_server_dbo__orders
+-- slv_sql_server_dbo__users
 -- =============================================================================
 -- Capa Silver: elimina borrados lógicos y deduplica por clave de negocio,
 -- quedándose con la versión más reciente según date_load.
+-- Además normaliza el email (minúsculas y sin espacios en los extremos).
+-- Lógica cubierta por el unit test test_slv_users_quita_borrados_y_deduplica.
 -- =============================================================================
 
-with orders as (
-    select * from {{ ref('stg_sql_server_dbo__orders') }}
+with users as (
+    select * from {{ ref('stg_sql_server_dbo__users') }}
 ),
 
 cleaned as (
     select
-          order_id
-        , user_id
+          user_id
+        , first_name
+        , last_name
+        , lower(trim(email))                       as email
+        , phone_number
         , address_id
-        , promo_id
         , created_at_utc
-        , estimated_delivery_at_utc
-        , delivered_at_utc
-        , tracking_id
-        , shipping_service
-        , shipping_cost_usd
-        , item_order_cost_usd
-        , total_order_cost_usd
-        , order_status
+        , updated_at_utc
         , date_load
-    from orders
+    from users
     where not is_deleted
-    qualify row_number() over (partition by order_id order by date_load desc) = 1
+    qualify row_number() over (partition by user_id order by date_load desc) = 1
 )
 
 select * from cleaned
